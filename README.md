@@ -37,3 +37,16 @@ tracker和其中一个storage安装在192.168.83.176上，另一个storage安装
 </ol>
 至此，fastdfs安装完成。
 </p>
+
+<p>
+todo:
+<ol>
+<li>运行参数中添加宿主机和容器的存储映射，使得fastdfs使用宿主机的存储</li>
+<li>运行参数中添加资源限制（cpu，内存等）</li>
+<li>docker镜像操作系统的参数调优</li>
+<li>docker镜像文件大小是否可优化</li>
+<li>storage多组安装</li>
+<li>工程下Dockfile文件的介绍，即安装思路</li>
+<li>tracker多点安装</li>
+</ol>
+</p>
