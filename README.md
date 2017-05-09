@@ -22,17 +22,18 @@ tracker和其中一个storage安装在192.168.83.176上，另一个storage安装
 </code></pre>
 <p>
 已上述安装场景为例，工程使用方法如下：
-1、在宿主机上安装docker
-2、下载工程到宿主机上，假定存储到宿主机的目录A
-3、进入目录A，执行命令
+<ol>
+<li>1、在宿主机上安装docker</li>
+<li>2、下载工程到宿主机上，假定存储到宿主机的目录A</li>
+<li>3、进入目录A，执行命令
    docker build -t zjg23/fastdfs:1.0 .
-   构建镜像
-4、在192.168.83.176上运行tracker
+   构建镜像</li>
+<li>4、在192.168.83.176上运行tracker
    docker run -d --name fdfs_tracker --net=host -e TRACKER_BASE_PATH=/export/fastdfs/tracker zjg23/fastdfs:1.0 sh /usr/local/src/tracker.sh
    在192.168.83.176上运行storage
    docker run -d --name fdfs_storage --net=host -e STORAGE_BASE_PATH=/export/fastdfs/storage  -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.176:22122 -e GROUP_COUNT=1 -e HTTP_SERVER_PORT=8080 zjg23/fastdfs:1.0 sh /usr/local/src/storage.sh
    在192.168.83.177上运行storage
-   docker run -d --name fdfs_storage_2 --net=host -e STORAGE_BASE_PATH=/export/fastdfs/storage  -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.176:22122 -e GROUP_COUNT=1 -e HTTP_SERVER_PORT=8080 zjg23/fastdfs:1.0 sh /usr/local/src/storage.sh
-
+   docker run -d --name fdfs_storage_2 --net=host -e STORAGE_BASE_PATH=/export/fastdfs/storage  -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.176:22122 -e GROUP_COUNT=1 -e HTTP_SERVER_PORT=8080 zjg23/fastdfs:1.0 sh /usr/local/src/storage.sh</li>
+</ol>
 至此，fastdfs安装完成。
 </p>
