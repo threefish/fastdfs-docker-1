@@ -43,8 +43,9 @@ todo:
 <ol>
 <li>运行参数中添加宿主机和容器的存储映射，使得fastdfs使用宿主机的存储--20170523完成<br />
 命令样例：<br />
-docker run -d --name fdfs_tracker  **-v /home/fastdfs/tracker:/export/fastdfs/tracker ** --net=host -e TRACKER_BASE_PATH=/export/fastdfs/tracker zjg23/fastdfs:1.0 sh /usr/local/src/tracker.sh<br />
-docker run -d --name fdfs_storage  **-v /home/fastdfs/storage:/export/fastdfs/storage ** --net=host -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.176:22122 -e GROUP_COUNT=1 -e HTTP_SERVER_PORT=8080 zjg23/fastdfs:1.0 sh /usr/local/src/storage.sh<br />
+docker run -d --name fdfs_tracker  -v /home/fastdfs/tracker:/export/fastdfs/tracker --net=host -e TRACKER_BASE_PATH=/export/fastdfs/tracker zjg23/fastdfs:1.0 sh /usr/local/src/tracker.sh<br />
+
+docker run -d --name fdfs_storage  -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.176:22122 -e GROUP_COUNT=1 -e HTTP_SERVER_PORT=8080 zjg23/fastdfs:1.0 sh /usr/local/src/storage.sh<br />
 </li>
 <li>运行参数中添加资源限制（cpu，内存等）</li>
 <li>docker镜像操作系统的参数调优</li>
