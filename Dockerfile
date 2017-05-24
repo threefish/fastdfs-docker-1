@@ -36,6 +36,5 @@ ADD nginx.conf /usr/local/nginx/conf/
 
 #create directory
 RUN mkdir -p /export/fastdfs/{storage,tracker}
-ADD group1.template /usr/local/src/
 ADD tracker.sh /usr/local/src/
 ADD storage.sh /usr/local/src/
