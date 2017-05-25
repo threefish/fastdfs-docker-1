@@ -1,5 +1,6 @@
 #!/bin/sh
 sed -i "s#\(port\).*#\1=$STORAGE_PORT#" /etc/fdfs/storage.conf
+sed -i "s#\(group_name\).*#\1=$GROUP_NAME#" /etc/fdfs/storage.conf
 sed -i "s#\(base_path\).*#\1=$STORAGE_BASE_PATH#" /etc/fdfs/storage.conf
 sed -i "s#\(store_path0\).*#\1=$STORAGE_PATH0#" /etc/fdfs/storage.conf
 sed -i "s#\(tracker_server\).*#\1=$TRACKER_SERVER#" /etc/fdfs/storage.conf
