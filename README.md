@@ -50,7 +50,30 @@ docker run -d --name fdfs_storage  -v /home/fastdfs/storage:/export/fastdfs/stor
 <li>运行参数中添加资源限制（cpu，内存等）</li>
 <li>docker镜像操作系统的参数调优</li>
 <li>docker镜像文件大小是否可优化</li>
-<li>storage多组安装</li>
+<li>storage多组安装--20170525完成<br/>
+举例：<br/>
+192.168.83.177--》tracker<br/>
+192.168.83.177,192.168.83.176-->group1 storage<br/>
+192.168.83.170,192.168.83.172-->group2,storage<br/>
+<br/>
+1、所有机器上执行：<br/>
+mkdir -p /home/fastdfs/{tracker,storage}<br/>
+docker build -t zjg23/fastdfs:2.0 .<br/> 
+<br/>
+2、构建tracker,177上执行：<br/>
+docker run -d --name fdfs_tracker  -v /home/fastdfs/tracker:/export/fastdfs/tracker --net=host -e TRACKER_BASE_PATH=/export/fastdfs/tracker -e TRACKER_PORT=22123 zjg23/fastdfs:2.0 sh /usr/local/src/tracker.sh<br/>
+<br/>
+3、构建storage<br/>
+3.1 177上执行：<br/>
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.177:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group1 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh<br/>
+3.2 176上执行：<br/>
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.177:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group1 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh<br/>
+3.3 170上执行：<br/>
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.177:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group2 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh<br/>
+3.4 172上执行：<br/>
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.83.177:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group2 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh<br/>
+
+</li>
 <li>工程下Dockfile文件的介绍，即安装思路</li>
 <li>tracker多点安装</li>
 </ol>
