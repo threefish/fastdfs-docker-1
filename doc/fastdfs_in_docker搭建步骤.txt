@@ -1,0 +1,18 @@
+2.1、所有机器上执行：
+git clone https://git.oschina.net/zjg23/fastdfs_in_docker.git;#从git服务器下载工程
+mkdir -p /home/fastdfs/{tracker,storage};                     #这两个路径用来挂载到docker容器，尤其是/home/fastdfs/storage路径要保证有足够的存储空间
+cd fastdfs_in_docker;
+docker build -t zjg23/fastdfs:2.0 .;                          #构建镜像
+
+2.2、构建tracker,192.168.5.128上执行：
+docker run -d --name fdfs_tracker -v /home/fastdfs/tracker:/export/fastdfs/tracker --net=host -e TRACKER_BASE_PATH=/export/fastdfs/tracker -e TRACKER_PORT=22123 zjg23/fastdfs:2.0 sh /usr/local/src/tracker.sh
+
+2.3、构建storage
+2.3.1 192.168.5.129上执行：
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.5.128:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group1 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh
+2.3.2 192.168.5.130上执行：
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.5.128:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group1 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh
+2.3.3 192.168.5.131上执行：
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.5.128:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group2 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh
+2.3.4 192.168.5.132上执行：
+docker run -d --name fdfs_storage -v /home/fastdfs/storage:/export/fastdfs/storage --net=host -e STORAGE_PORT=23001 -e STORAGE_BASE_PATH=/export/fastdfs/storage -e STORAGE_PATH0=/export/fastdfs/storage -e TRACKER_SERVER=192.168.5.128:22123 -e GROUP_COUNT=2 -e HTTP_SERVER_PORT=8080 -e GROUP_NAME=group2 zjg23/fastdfs:2.0 sh /usr/local/src/storage.sh
