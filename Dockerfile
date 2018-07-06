@@ -4,8 +4,6 @@ FROM hub.c.163.com/library/centos:6.8
 MAINTAINER zjg23 "zhaojianguo1234@aliyun.com"
 
 
-#设置YUM源为163
-COPY CentOS7-Base-163.repo /etc/yum.repos.d/CentOS-Base.repo
 #生成缓存
 RUN yum update -y && yum makecache
 #########################################中文乱码处理################################################
