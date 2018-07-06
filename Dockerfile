@@ -3,8 +3,28 @@ FROM hub.c.163.com/library/centos:6.8
 
 MAINTAINER zjg23 "zhaojianguo1234@aliyun.com"
 
+
+#设置YUM源为163
+COPY CentOS7-Base-163.repo /etc/yum.repos.d/CentOS-Base.repo
+#生成缓存
+RUN yum update -y && yum makecache
+#########################################中文乱码处理################################################
+#时区设置
+RUN rm -rf /etc/localtime && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#安装中文支持
+RUN yum -y install kde-l10n-Chinese && yum -y reinstall glibc-common
+#配置显示中文
+RUN localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
+#设置环境变量
+ENV LC_ALL zh_CN.utf8
+RUN echo "export LC_ALL=zh_CN.utf8" >> /etc/profile
+#清理，也可以先卸载一些不需要的软件 这样build出来的镜像会更小
+RUN yum clean all
+
+
 #install dependency
 RUN yum install -y zlib zlib-devel pcre pcre-devel gcc gcc-c++ openssl openssl-devel libevent libevent-devel perl unzip
+
 
 #install libfastcommon
 ADD libfastcommon-1.0.7.zip /usr/local/src/
