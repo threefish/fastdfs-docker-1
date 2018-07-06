@@ -25,15 +25,15 @@ RUN yum install -y zlib zlib-devel pcre pcre-devel gcc gcc-c++ openssl openssl-d
 
 
 #install libfastcommon
-ADD libfastcommon-1.0.7.zip /usr/local/src/
+ADD libfastcommon-1.0.38.zip /usr/local/src/
 RUN cd /usr/local/src \
-    && unzip /usr/local/src/libfastcommon-1.0.7.zip \
-    && cd libfastcommon-1.0.7 \
+    && unzip /usr/local/src/libfastcommon-1.0.38.zip \
+    && cd libfastcommon-1.0.38 \
     && ./make.sh \
     && ./make.sh install
 
 #install fastdfs
-ADD FastDFS_v5.05.tar.gz /usr/local/src/
+ADD FastDFS_v5.11.tar.gz /usr/local/src/
 RUN cd /usr/local/src/FastDFS \
 && ./make.sh \
 && ./make.sh install \
@@ -42,7 +42,7 @@ RUN cd /usr/local/src/FastDFS \
 && rm -rf *.sample
 
 #install nginx
-ADD fastdfs-nginx-module_v1.16.tar.gz /usr/local/src/
+ADD fastdfs-nginx-module-1.20.tar.gz /usr/local/src/
 ADD nginx-1.7.8.tar.gz /usr/local/src/
 RUN cd /usr/local/src/ \
     && cd nginx-1.7.8 \
