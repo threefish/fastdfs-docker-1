@@ -34,6 +34,7 @@ RUN cd /usr/local/src \
 
 #install fastdfs
 ADD FastDFS_v5.11.tar.gz /usr/local/src/
+RUN mkdir /usr/local/src/FastDFS
 RUN cd /usr/local/src/FastDFS \
 && ./make.sh \
 && ./make.sh install \
